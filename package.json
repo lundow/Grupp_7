@@ -1,0 +1,23 @@
+{
+  "name": "grupp_7",
+  "version": "1.0.0",
+  "description": "API Mashup Project",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lundow/Grupp_7.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lundow/Grupp_7/issues"
+  },
+  "homepage": "https://github.com/lundow/Grupp_7#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
