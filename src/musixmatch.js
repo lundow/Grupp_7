@@ -1,25 +1,29 @@
-const fetch = require("node-fetch");
+const api = require("./api.js")
 const keys = require("./../keys.json")
-const http = "http://api.musixmatch.com/ws/1.1/"
+const url = "http://api.musixmatch.com/ws/1.1/"
 const key = "&apikey=" + keys.musixmatch
 
-const track_query = "&q_track=" + "Nothing is Safe"
-const artist_query = "&q_artist=" + "clipping."
-const rating_sort  = "&s_track_rating=" + "DESC"
-const method = "track.search?" + track_query + artist_query + rating_sort
+const getTrackID = async (track) => {
+  const track_query = "&q_track=" + track.name
+  const artist_query = "&q_artist=" + track.artist['#text']
+  const rating_sort = "&s_track_rating=" + "DESC"
 
-const url = http + method + key;
+  const method = "track.search?" + track_query + artist_query + rating_sort
+  const req_url = url + method + key
 
-const getData = async () => {
-  try {
-    const response = await fetch(url);
-    const json = await response.json();
-    console.log(json.message.body.track_list);
-  } catch (error) {
-    console.log(error);
-  }
-};
+  const json = await api.getData(req_url)
+  return json.message.body.track_list[0].track.track_id
+}
+
+const getLyrics = async (track_id) => {
+  console.log(track_id)
+  const method = "track.lyrics.get?track_id=" + track_id
+  const req_url = url + method + key
+  const json = await api.getData(req_url)
+  console.log(json.message.body)
+}
 
 module.exports = {
-    getData
+  getTrackID,
+  getLyrics
 }
