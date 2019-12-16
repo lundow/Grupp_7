@@ -1,5 +1,5 @@
-const api = require("./api.js")
-const keys = require("./../keys.json")
+const api = require("./fetch.js")
+const keys = require("./../../keys.json")
 const url = "http://api.musixmatch.com/ws/1.1/"
 const key = "&apikey=" + keys.musixmatch
 
