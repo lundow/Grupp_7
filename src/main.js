@@ -1,12 +1,7 @@
-const lastFM = require("./lastFM.js")
-const musixmatch = require("./musixmatch.js")
+const server = require("./server.js")
 
-const username = "Buden1"
+const port = 8000
 
-const getData = async () => {
-  const track = await lastFM.getCurrentTrack(username)
-  const track_id = await musixmatch.getTrackID(track)
-  console.log(await musixmatch.getLyrics(track_id))
-}
-
-getData()
+server.listen(port, () => {
+  console.log("Server listening on port " + port)
+})

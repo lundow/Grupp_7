@@ -7,7 +7,7 @@ const format = "&format=json"
 const getCurrentTrack = async (username) => {
   const limit_query = "&limit=1"
   const user_query = "&user=" + username
-  
+
   const method = "?method=user.getrecenttracks" + limit_query + user_query
   const req_url = url + method + key + format
 
