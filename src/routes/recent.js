@@ -2,23 +2,28 @@ const express = require("express")
 const router = express.Router();
 const controller = require("./../controllers/recent.js")
 
+//Available endpoints for /recent and the correspondning functions
 const endpoints = {
-  "/":      (p) => controller.getRecentTracks(p),
-  "/mbid":  (p) => controller.getRecentMbid(p),
+  "/": (p) => controller.getRecentTracks(p),
+  "/mbids": (p) => controller.getRecentMbids(p),
+  "/tracks": (p) => { },
+  "/artists": (p) => { },
+  "/album_covers": (p) => { },
+  "/genius_links": (p) => { },
+  "/spotify_links": (p) => { },
 }
 
 const handleRequest = async (req, res, controllerFunction) => {
   try {
     const params = queryRequest(req, res)
-    console.log(params)
-    if(res.statusCode < 400) 
+    if (res.statusCode < 400)
       res.status(200).send(await controllerFunction(params))
   } catch (error) {
     res.status(400).send(error.message)
   }
 }
 
-for(let key in endpoints){
+for (let key in endpoints) {
   router.get(key, (req, res) => {
     handleRequest(req, res, endpoints[key])
   })
