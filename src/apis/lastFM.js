@@ -13,7 +13,6 @@ const getRecentTracks = async (username, limit) => {
 
   const json = await api.getData(req_url)
   const tracks = json.recenttracks
-  console.log(tracks)
   return tracks
 }
 

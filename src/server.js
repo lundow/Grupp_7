@@ -1,7 +1,7 @@
 const express = require('express')
 const server = express()
 
-const recentTracks = require("./routes/route_recentTracks.js")
+const recent = require("./routes/recent.js")
 
 server.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'http://localhost:8000')
@@ -12,6 +12,6 @@ server.get("/", (req, res) => {
   res.send("root")
 })
 
-server.use("/recentTracks", recentTracks)
+server.use("/recent", recent)
 
 module.exports = server;
