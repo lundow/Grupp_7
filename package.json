@@ -19,6 +19,7 @@
   "homepage": "https://github.com/lundow/Grupp_7#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "node-fetch": "^2.6.0"
+    "node-fetch": "^2.6.0",
+    "request": "^2.88.0"
   }
 }
