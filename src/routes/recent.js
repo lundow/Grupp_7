@@ -6,6 +6,7 @@ const controller = require("./../controllers/recent.js")
 const endpoints = {
   "/": (p) => controller.getRecentTracks(p),
   "/mbids": (p) => controller.getRecentMbids(p),
+  "/track_and_poster": (p) => controller.getRecentTrackAndPoster(p),
   "/tracks": (p) => { },
   "/artists": (p) => { },
   "/album_covers": (p) => { },
@@ -32,7 +33,6 @@ for (let key in endpoints) {
 
 const queryRequest = (req, res) => {
   let params = {}
-
   const username = req.query.username
   if (username === undefined) res.status(400).send("Username is undefined")
   else params["username"] = username
@@ -46,7 +46,6 @@ const queryRequest = (req, res) => {
     params["limit"] = 5
   else
     params["limit"] = limit
-
   return params
 }
 

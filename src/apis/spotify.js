@@ -23,20 +23,24 @@ const fetchToken = async () => {
 
 }
 
-const getAlbumCover = async (artist, title, type, limit) => {
-    const query = "q=" + artist + "+" + title;
+const getTrackInfo = async (artist, title, type, limit) => {
+    const query = "q=" + encodeURIComponent(artist) + "+" + encodeURIComponent(title);
     const type_query = "&type=" + type;
     const limit_query = "&limit=" + limit;
     const url = "https://api.spotify.com/v1/search?" + query + type_query + limit_query;
     const headers = {'Authorization': "Bearer " + access_token}
     const res = await api.getDataParams(url,headers);
     
-    const albumCover = res.tracks.items[0].album.images[0].url;
-    console.log("ALBUM_COVER: ", albumCover);
-    return albumCover;
+    spotify_info={
+        albumCover : res.tracks.items[0].album.images[0].url,
+        url:res.tracks.items[0].uri
+    }
+
+    console.log("INFO: ", spotify_info);
+    return spotify_info;
 };
 
 module.exports = {
     fetchToken,
-    getAlbumCover
+    getTrackInfo
 };
