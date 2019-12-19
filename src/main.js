@@ -4,5 +4,12 @@ const port = 8000
 
 server.listen(port, () => {
   console.log("Server listening on port " + port)
-  spotify.getAccessToken();
+  getToken();
 })
+
+
+  getToken = async () => {
+    await spotify.fetchToken()
+    var albumart = await spotify.getAlbumCover("kiss", "strutter", "track", "1");
+    console.log(albumart);
+}
