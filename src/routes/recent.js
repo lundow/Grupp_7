@@ -1,14 +1,12 @@
 const express = require("express")
-const router = express.Router();
+const router = express.Router()
 const controller = require("./../controllers/recent.js")
 
 //Available endpoints for /recent and the correspondning functions
 const endpoints = {
   "/": (p) => controller.getRecentTracks(p),
-  "/mbids": (p) => controller.getRecentMbids(p),
+  "/tracks" : (p) => controller.getRecentTracks(p),
   "/track_and_poster": (p) => controller.getRecentTrackAndPoster(p),
-  "/tracks": (p) => { },
-  "/artists": (p) => { },
   "/album_covers": (p) => { },
   "/genius_links": (p) => { },
   "/spotify_links": (p) => { },

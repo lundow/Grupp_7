@@ -20,7 +20,6 @@ const fetchToken = async () => {
     console.log("ACCESS_TOKEN: ",access_token);
     data.delete;
     return (access_token);
-
 }
 
 const getTrackInfo = async (artist, title, type, limit) => {
@@ -36,7 +35,6 @@ const getTrackInfo = async (artist, title, type, limit) => {
         url:res.tracks.items[0].uri
     }
 
-    console.log("INFO: ", spotify_info);
     return spotify_info;
 };
 
