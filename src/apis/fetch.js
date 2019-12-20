@@ -12,7 +12,7 @@ const getData = async (url) => {
 
 const getDataParams = async (url, headers) => {
   try {
-    const res = await fetch(url, {method :'GET',headers: headers});
+    const res = await fetch(url, { method: 'GET', headers: headers });
     const json = await res.json()
     return json
   } catch (error) {
@@ -20,13 +20,12 @@ const getDataParams = async (url, headers) => {
   }
 }
 
-
-const postData = async (url, headers, data ) => {
-  try{
-    const res = await fetch(url,{method:'POST', headers: headers, body: data})
+const postData = async (url, headers, data) => {
+  try {
+    const res = await fetch(url, { method: 'POST', headers: headers, body: data })
     const json = await res.json()
     return json
-  }catch (error) {
+  } catch (error) {
     console.log(error)
   }
 }

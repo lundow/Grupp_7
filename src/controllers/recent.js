@@ -1,5 +1,6 @@
-const lastFM = require("./../apis/lastFM")
-const spotify = require("./../apis/spotify")
+const lastFM = require("./../apis/lastFM.js")
+const spotify = require("./../apis/spotify.js")
+const genius = require("./../apis/genius.js")
 
 const getRecentTracks = async (params) => {
   const lastFM_tracks = await lastFM.getRecentTracks(params.username, params.limit)
@@ -44,9 +45,15 @@ const getFavouriteTracks = async (params) => {
   return tracks
 }
 
+const genius_test = async () => {
+  const res = await genius.searchFor("Superman is dead Pouya")
+  var hits = res.response.hits
+  return hits
+}
+
 module.exports = {
   getRecentTracks,
-  getRecentMbids,
   getFavouriteTracks,
-  getRecentTrackAndPoster
+  getRecentTrackAndPoster,
+  genius_test
 }
