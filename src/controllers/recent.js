@@ -8,12 +8,18 @@ const getRecentCombined = async (params) => {
 }
 
 const getRecentTracks = async (params) => {
-  const recentTracks = await lastFM.getRecentTracks(params.username, params.limit)
+  const response = await lastFM.getRecentTracks(params.username, params.limit)
+
+  const error = response.error
+  if (error === 6) {
+    params.res.status(404).send("404 - User not found")
+    return
+  }
+
+  const recentTracks = response.recenttracks.track
   var tracks = []
-
-  for (var i in recentTracks) {
+  for (var i = 0; i < params.limit; i++) {
     var track = recentTracks[i]
-
     tracks.push({
       "name": track.name,
       "artist": track.artist['#text']
@@ -29,8 +35,8 @@ const getRecentLyrics = async (params) => {
   for (var i in recentTracks) {
     var track = recentTracks[i]
     var res = await genius.searchFor(track.name + " " + track.artist)
-    if (res.hits[0] !== undefined) {
-      var path = res.hits[0].result.path
+    if (res.response.hits[0] !== undefined) {
+      var path = res.response.hits[0].result.path
       var lyrics = await scraper.scrapeLyrics(path)
 
       tracks.push({
@@ -42,7 +48,7 @@ const getRecentLyrics = async (params) => {
       tracks.push({
         "name": track.name,
         "artist": track.artist,
-        "lyrics": '404'
+        "lyrics": '404 - Lyrics not found'
       })
     }
   }
@@ -50,14 +56,14 @@ const getRecentLyrics = async (params) => {
 }
 
 const getRecentPlaycounts = async (params) => {
-  const recentTracks = await lastFM.getRecentTracks(params.username, params.limit)
+  const recentTracks = await getRecentTracks(params)
   var tracks = []
 
   for (var i in recentTracks) {
     var track = recentTracks[i]
     var trackParams = {
       "name": track.name,
-      "artist": track.artist['#text'],
+      "artist": track.artist,
       "username": params.username
     }
     var trackInfo = await lastFM.getTrackInfo(trackParams)
@@ -65,7 +71,7 @@ const getRecentPlaycounts = async (params) => {
 
     tracks.push({
       "name": track.name,
-      "artist": track.artist['#text'],
+      "artist": track.artist,
       "playcount": playCount
     })
   }

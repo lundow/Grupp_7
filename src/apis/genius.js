@@ -8,9 +8,7 @@ const searchFor = async (searchTerm) => {
   console.log(searchTerm)
   const req_url = url + method + key
 
-  const json = await api.getData(req_url)
-  const response = json.response
-  return response
+  return await api.getData(req_url)
 }
 
 module.exports = {

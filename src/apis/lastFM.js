@@ -11,9 +11,7 @@ const getRecentTracks = async (username, limit) => {
   const method = "?method=user.getrecenttracks" + limit_query + user_query
   const req_url = url + method + key + format
 
-  const json = await api.getData(req_url)
-  const tracks = json.recenttracks.track
-  return tracks
+  return await api.getData(req_url)
 }
 
 const getTrackInfo = async (params) => {
@@ -27,6 +25,15 @@ const getTrackInfo = async (params) => {
   const json = await api.getData(req_url)
   const info = json.track
   return info
+}
+
+const getUserInfo = async (params) => {
+  const user_query = "&user=" + params.username
+
+  const method = "?method=user.getInfo" + user_query
+  const req_url = url + method + key + format
+
+  return await api.getData(req_url)
 }
 
 const getFavouriteTracks = async (username, limit) => {
@@ -45,5 +52,6 @@ const getFavouriteTracks = async (username, limit) => {
 module.exports = {
   getRecentTracks,
   getTrackInfo,
+  getUserInfo,
   getFavouriteTracks
 }

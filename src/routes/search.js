@@ -13,7 +13,9 @@ const endpoints = {
 
 const handleRequest = async (req, res, controllerFunction) => {
   try {
-    const params = queryRequest(req, res)
+    var params = queryRequest(req, res)
+    params['res'] = res
+    
     if (res.statusCode < 400)
       res.status(200).send(await controllerFunction(params))
   } catch (error) {
@@ -32,7 +34,7 @@ const queryRequest = (req, res) => {
   let params = {}
 
   //username
-  //    - Only required for /playcounts
+  //    - Only required for /playcount
   const username = req.query.username
   if (username === undefined && path === "/playcount")
     res.status(400).send("400 - Username is undefined")
