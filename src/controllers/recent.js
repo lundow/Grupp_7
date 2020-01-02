@@ -3,18 +3,31 @@ const spotify = require("./../apis/spotify.js")
 const genius = require("./../apis/genius.js")
 
 const getRecentTracks = async (params) => {
-  const lastFM_tracks = await lastFM.getRecentTracks(params.username, params.limit)
+  const lastFM_tracks = await lastFM.getRecentTracks(params.username, params.limit - 1)
   var tracks = []
   
   for (var i in lastFM_tracks) {
     var track = {
       "name": lastFM_tracks[i].name,
-      "artist": lastFM_tracks[i].album['#text'],
-      "album": lastFM_tracks[i].artist['#text']
+      "artist": lastFM_tracks[i].artist['#text'],
+      "album": lastFM_tracks[i].album['#text']
     }
     tracks.push(track)
   }
   return tracks
+}
+
+const getRecentLyrics = async (params) => {
+  const recentTracks = await getRecentTracks(params)
+  var paths = []
+
+  for(var i in recentTracks){
+    var track = recentTracks[i]
+    var res = await genius.searchFor(track.name + " " + track.artist)
+    var path = res.hits[0].result.path
+    paths.push(path)
+  }
+  return paths
 }
 
 const getRecentTrackAndPoster = async (params) => {
@@ -45,15 +58,9 @@ const getFavouriteTracks = async (params) => {
   return tracks
 }
 
-const genius_test = async () => {
-  const res = await genius.searchFor("Superman is dead Pouya")
-  var hits = res.response.hits
-  return hits
-}
-
 module.exports = {
   getRecentTracks,
+  getRecentLyrics,
   getFavouriteTracks,
   getRecentTrackAndPoster,
-  genius_test
 }

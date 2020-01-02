@@ -6,11 +6,11 @@ const controller = require("./../controllers/recent.js")
 const endpoints = {
   "/": (p) => controller.getRecentTracks(p),
   "/tracks" : (p) => controller.getRecentTracks(p),
+  "/lyrics" : (p) => controller.getRecentLyrics(p),
   "/track_and_poster": (p) => controller.getRecentTrackAndPoster(p),
-  "/album_covers": (p) => { },
-  "/genius_test": (p) => { controller.genius_test() },
-  "/spotify_links": (p) => { },
   "/favourite_tracks": (p) => controller.getFavouriteTracks(p),
+  // "/album_covers": (p) => ,
+  // "/spotify_links": (p) => ,
 }
 
 const handleRequest = async (req, res, controllerFunction) => {
