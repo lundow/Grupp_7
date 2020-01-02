@@ -3,6 +3,10 @@ const spotify = require("./../apis/spotify.js")
 const genius = require("./../apis/genius.js")
 const scraper = require("./../scraper.js")
 
+const getRecentCombined = async (params) => {
+  //TODO
+}
+
 const getRecentTracks = async (params) => {
   const recentTracks = await lastFM.getRecentTracks(params.username, params.limit)
   var tracks = []
@@ -79,6 +83,7 @@ const getFavouriteTracks = async (params) => {
 }
 
 module.exports = {
+  getRecentCombined,
   getRecentTracks,
   getRecentLyrics,
   getRecentPlaycounts,
