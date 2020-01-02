@@ -7,6 +7,7 @@ const endpoints = {
   "/": (p) => controller.getRecentTracks(p),
   "/tracks" : (p) => controller.getRecentTracks(p),
   "/lyrics" : (p) => controller.getRecentLyrics(p),
+  "/playcounts" : (p) => controller.getRecentPlaycounts(p),
   "/track_and_poster": (p) => controller.getRecentTrackAndPoster(p),
   "/favourite_tracks": (p) => controller.getFavouriteTracks(p),
   // "/album_covers": (p) => ,

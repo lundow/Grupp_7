@@ -4,14 +4,14 @@ const genius = require("./../apis/genius.js")
 const scraper = require("./../scraper.js")
 
 const getRecentTracks = async (params) => {
-  const lastFM_tracks = await lastFM.getRecentTracks(params.username, params.limit)
+  const recentTracks = await lastFM.getRecentTracks(params.username, params.limit)
   var tracks = []
   
-  for (var i in lastFM_tracks) {
+  for (var i in recentTracks) {
     var track = {
-      "name": lastFM_tracks[i].name,
-      "artist": lastFM_tracks[i].artist['#text'],
-      "album": lastFM_tracks[i].album['#text']
+      "name": recentTracks[i].name,
+      "artist": recentTracks[i].artist['#text'],
+      "album": recentTracks[i].album['#text']
     }
     tracks.push(track)
   }
@@ -30,6 +30,24 @@ const getRecentLyrics = async (params) => {
     lyrics.push(lyric)
   }
   return lyrics
+}
+
+const getRecentPlaycounts = async (params) => {
+  const recentTracks = await lastFM.getRecentTracks(params.username, params.limit)
+  var playCounts = []
+
+  for(var i in recentTracks){
+    var track = recentTracks[i]
+    var trackParams = {
+      "track" : track.name,
+      "artist" : track.artist['#text'],
+      "username" : params.username
+    }
+    var trackInfo = await lastFM.getTrackInfo(trackParams)
+    var playCount = trackInfo.userplaycount
+    playCounts.push(playCount)
+  }
+  return playCounts
 }
 
 const getRecentTrackAndPoster = async (params) => {
@@ -63,6 +81,7 @@ const getFavouriteTracks = async (params) => {
 module.exports = {
   getRecentTracks,
   getRecentLyrics,
+  getRecentPlaycounts,
   getFavouriteTracks,
   getRecentTrackAndPoster,
 }

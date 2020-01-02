@@ -32,6 +32,6 @@ const postData = async (url, headers, data) => {
 
 module.exports = {
   getData,
-  postData,
-  getDataParams
+  getDataParams,
+  postData
 }
