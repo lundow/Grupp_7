@@ -10,46 +10,64 @@ const getRecentCombined = async (params) => {
 const getRecentTracks = async (params) => {
   const recentTracks = await lastFM.getRecentTracks(params.username, params.limit)
   var tracks = []
-  
+
   for (var i in recentTracks) {
-    var track = {
-      "name": recentTracks[i].name,
-      "artist": recentTracks[i].artist['#text'],
-      "album": recentTracks[i].album['#text']
-    }
-    tracks.push(track)
+    var track = recentTracks[i]
+
+    tracks.push({
+      "name": track.name,
+      "artist": track.artist['#text']
+    })
   }
   return tracks
 }
 
 const getRecentLyrics = async (params) => {
   const recentTracks = await getRecentTracks(params)
-  var lyrics = []
+  var tracks = []
 
-  for(var i in recentTracks){
+  for (var i in recentTracks) {
     var track = recentTracks[i]
     var res = await genius.searchFor(track.name + " " + track.artist)
-    var path = res.hits[0].result.path
-    var lyric = await scraper.scrapeLyrics(path)
-    lyrics.push(lyric)
+    if (res.hits[0] !== undefined) {
+      var path = res.hits[0].result.path
+      var lyrics = await scraper.scrapeLyrics(path)
+
+      tracks.push({
+        "name": track.name,
+        "artist": track.artist,
+        "lyrics": lyrics
+      })
+    } else {
+      tracks.push({
+        "name": track.name,
+        "artist": track.artist,
+        "lyrics": '404'
+      })
+    }
   }
-  return lyrics
+  return tracks
 }
 
 const getRecentPlaycounts = async (params) => {
   const recentTracks = await lastFM.getRecentTracks(params.username, params.limit)
-  var playCounts = []
+  var tracks = []
 
-  for(var i in recentTracks){
+  for (var i in recentTracks) {
     var track = recentTracks[i]
     var trackParams = {
-      "track" : track.name,
-      "artist" : track.artist['#text'],
-      "username" : params.username
+      "name": track.name,
+      "artist": track.artist['#text'],
+      "username": params.username
     }
     var trackInfo = await lastFM.getTrackInfo(trackParams)
     var playCount = trackInfo.userplaycount
-    playCounts.push(playCount)
+
+    tracks.push({
+      "name": track.name,
+      "artist": track.artist['#text'],
+      "playCount": playCount
+    })
   }
   return playCounts
 }

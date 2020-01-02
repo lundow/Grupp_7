@@ -34,15 +34,19 @@ const queryRequest = (req, res) => {
   let params = {}
 
   //username
+  //    - Always required
   const username = req.query.username
   if (username === undefined) res.status(400).send("Username is undefined")
   else params["username"] = username
 
   //limit
+  //    - Always optional 
+  //    - Defaults to 5
+  //    - Must be 0< and 20> 
   const limit = req.query.limit
   if (limit <= 0)
     res.status(400).send("Limit has to be bigger than 0")
-  else if (limit >= 20)
+  else if (limit > 20)
     res.status(400).send("Limit has to be smaller than 20")
   else if (limit === undefined)
     params["limit"] = 5

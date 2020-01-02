@@ -17,7 +17,7 @@ const getRecentTracks = async (username, limit) => {
 }
 
 const getTrackInfo = async (params) => {
-  const track_query = "&track=" + params.track
+  const track_query = "&track=" + params.name
   const artist_query = "&artist=" + params.artist
   const user_query = "&user=" + params.username
 

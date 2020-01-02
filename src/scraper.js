@@ -9,8 +9,10 @@ const scrapeLyrics = async (path) => {
 
   const $ = cheerio.load(body)
   var lyrics = $(".lyrics").text()
-  console.log(lyrics)
-  return lyrics
+  var trimmed = lyrics.slice(37, lyrics.length - 34)
+  console.log(trimmed)
+
+  return trimmed
 }
 
 module.exports = {
