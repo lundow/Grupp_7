@@ -1,9 +1,10 @@
 const lastFM = require("./../apis/lastFM.js")
 const spotify = require("./../apis/spotify.js")
 const genius = require("./../apis/genius.js")
+const scraper = require("./../scraper.js")
 
 const getRecentTracks = async (params) => {
-  const lastFM_tracks = await lastFM.getRecentTracks(params.username, params.limit - 1)
+  const lastFM_tracks = await lastFM.getRecentTracks(params.username, params.limit)
   var tracks = []
   
   for (var i in lastFM_tracks) {
@@ -19,15 +20,16 @@ const getRecentTracks = async (params) => {
 
 const getRecentLyrics = async (params) => {
   const recentTracks = await getRecentTracks(params)
-  var paths = []
+  var lyrics = []
 
   for(var i in recentTracks){
     var track = recentTracks[i]
     var res = await genius.searchFor(track.name + " " + track.artist)
     var path = res.hits[0].result.path
-    paths.push(path)
+    var lyric = await scraper.scrapeLyrics(path)
+    lyrics.push(lyric)
   }
-  return paths
+  return lyrics
 }
 
 const getRecentTrackAndPoster = async (params) => {
