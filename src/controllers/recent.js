@@ -66,10 +66,10 @@ const getRecentPlaycounts = async (params) => {
     tracks.push({
       "name": track.name,
       "artist": track.artist['#text'],
-      "playCount": playCount
+      "playcount": playCount
     })
   }
-  return playCounts
+  return tracks
 }
 
 const getRecentTrackAndPoster = async (params) => {

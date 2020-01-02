@@ -5,7 +5,7 @@ const controller = require("./../controllers/search.js")
 //Available endpoints for /search and the correspondning functions
 const endpoints = {
   "/lyrics": (p) => controller.getLyrics(p),
-  "/playcounts": (p) => controller.getPlaycount(p),
+  "/playcount": (p) => controller.getPlaycount(p),
   "/cover": (p) => controller.getCover(p),
   // "/spotify_links": (p) => ,
   // "/user": (p) => ,
@@ -32,20 +32,20 @@ const queryRequest = (req, res) => {
   let params = {}
 
   //username
-  //    - only required for /playcounts
+  //    - Only required for /playcounts
   const username = req.query.username
-  if (username === undefined && path === "/playcounts")
-    res.status(400).send("Username is undefined")
+  if (username === undefined && path === "/playcount")
+    res.status(400).send("400 - Username is undefined")
   else params["username"] = username
 
   //track
   const track = req.query.track
-  if (track === undefined) res.status(400).send("Track is undefined")
-  else params["track"] = track
+  if (track === undefined) res.status(400).send("400 - Track is undefined")
+  else params["name"] = track
 
   //artist
   const artist = req.query.artist
-  if (track === undefined) res.status(400).send("Artist is undefined")
+  if (track === undefined) res.status(400).send("400 - Artist is undefined")
   else params["artist"] = artist
 
   return params
