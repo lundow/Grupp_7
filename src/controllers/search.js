@@ -14,7 +14,6 @@ const getLyrics = async (params) => {
   const track = hits[0].result
   const path = track.path
   const lyrics = await scraper.scrapeLyrics(path)
-
   return {
     "track": track.title,
     "artist": track.primary_artist.name,
@@ -24,15 +23,13 @@ const getLyrics = async (params) => {
 
 const getPlaycount = async (params) => {
   const userInfo = await lastFM.getUserInfo(params)
-  
   const error = userInfo.error
-  if(error === 6){
+  if (error === 6) {
     params.res.status(404).send("404 - User not found")
     return
   }
-  
+
   const res = await lastFM.getTrackInfo(params)
-  
   return {
     "track": res.name,
     "artist": res.artist.name,
@@ -44,8 +41,24 @@ const getCover = async (params) => {
 
 }
 
+const getUserInfo = async (params) => {
+  const userInfo = await lastFM.getUserInfo(params)
+  const error = userInfo.error
+  if (error === 6) {
+    params.res.status(404).send("404 - User not found")
+    return
+  }
+
+  return {
+    "totalplaycount": userInfo.user.playcount,
+    "url": userInfo.user.url,
+    "registered": userInfo.user.registered
+  }
+}
+
 module.exports = {
   getLyrics,
   getPlaycount,
   getCover,
+  getUserInfo,
 }
