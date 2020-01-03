@@ -4,10 +4,10 @@ const controller = require("./../controllers/recent.js")
 
 //Available endpoints for /recent and the correspondning functions
 const endpoints = {
-  // "/": (p) => controller.getRecentCombined(p),
-  "/tracks" : (p) => controller.getRecentTracks(p),
-  "/lyrics" : (p) => controller.getRecentLyrics(p),
-  "/playcounts" : (p) => controller.getRecentPlaycounts(p),
+  "/": (p) => controller.getRecentCombined(p),
+  "/tracks": (p) => controller.getRecentTracks(p),
+  "/lyrics": (p) => controller.getRecentLyrics(p),
+  "/playcounts": (p) => controller.getRecentPlaycounts(p),
   "/track_and_poster": (p) => controller.getRecentTrackAndPoster(p),
   "/favourite_tracks": (p) => controller.getFavouriteTracks(p),
   // "/album_covers": (p) => ,
@@ -19,8 +19,9 @@ const handleRequest = async (req, res, controllerFunction) => {
     var params = queryRequest(req, res)
     params['res'] = res
 
+    const json = await controllerFunction(params)
     if (res.statusCode < 400)
-      res.status(200).send(await controllerFunction(params))
+      res.status(200).send(json)
   } catch (error) {
     res.status(400).send(error.message)
   }

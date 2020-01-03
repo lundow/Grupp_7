@@ -4,7 +4,38 @@ const genius = require("./../apis/genius.js")
 const scraper = require("./../scraper.js")
 
 const getRecentCombined = async (params) => {
-  //TODO
+  const recentTracks = await getRecentTracks(params)
+  var tracks = []
+
+  for (var i in recentTracks) {
+    var track = recentTracks[i]
+    //name & artist
+    track['name'] = track.name
+    track['artist'] = track.artist
+
+    //lyrics
+    var geniusSearch = await genius.searchFor(track.name + " " + track.artist)
+    if (geniusSearch.response.hits[0] !== undefined) {
+      var geniusPath = geniusSearch.response.hits[0].result.path
+      track['lyrics'] = await scraper.scrapeLyrics(geniusPath)
+    } else {
+      track['lyrics'] = "404 - Lyrics not found"
+    }
+    
+    //playcount
+    var trackParams = {
+      "name": track.name,
+      "artist": track.artist,
+      "username": params.username
+    }
+    var trackInfo = await lastFM.getTrackInfo(trackParams)
+    var playCount = trackInfo.userplaycount
+    track['plavcount'] = playCount
+
+    tracks.push(track)
+  }
+
+  return tracks
 }
 
 const getRecentTracks = async (params) => {

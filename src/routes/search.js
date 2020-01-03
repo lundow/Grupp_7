@@ -16,8 +16,9 @@ const handleRequest = async (req, res, controllerFunction) => {
     var params = queryRequest(req, res)
     params['res'] = res
 
+    const json = await controllerFunction(params)
     if (res.statusCode < 400)
-      res.status(200).send(await controllerFunction(params))
+      res.status(200).send(json)
   } catch (error) {
     res.status(400).send(error.message)
   }
