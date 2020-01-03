@@ -79,12 +79,13 @@ const getRecentPlaycounts = async (params) => {
 }
 
 const getRecentTrackAndPoster = async (params) => {
-  var res = await lastFM.getRecentTracks(params.username, params.limit);
+  var res = await getRecentTracks(params);
   const token = await spotify.fetchToken();
 
   const result = await Promise.all(res.map(async (track) => {
-    var spotifyInfo = await spotify.getTrackInfo(track.artist['#text'], track.name, "track", 1);
-    track.spotify_info = await spotifyInfo;
+    var spotifyInfo = await spotify.getTrackInfo(track.artist, track.name, "track", 1);
+    track.albumCover = await spotifyInfo.albumCover;
+    track.spotifyURI = await spotifyInfo.uri;
     return await track;
   }));
   return result;
