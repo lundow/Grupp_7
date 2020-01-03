@@ -29,10 +29,10 @@ const getTrackInfo = async (artist, title, type, limit) => {
     const url = "https://api.spotify.com/v1/search?" + query + type_query + limit_query;
     const headers = {'Authorization': "Bearer " + access_token}
     const res = await api.getDataParams(url,headers);
-    
+
     spotify_info={
         albumCover : res.tracks.items[0].album.images[0].url,
-        url:res.tracks.items[0].uri
+        uri:res.tracks.items[0].uri
     }
 
     return spotify_info;
