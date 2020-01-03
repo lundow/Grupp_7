@@ -78,13 +78,25 @@ const getRecentPlaycounts = async (params) => {
   return tracks
 }
 
-const getRecentTrackAndPoster = async (params) => {
+
+const getAlbumCovers = async (params) => {
   var res = await getRecentTracks(params);
   const token = await spotify.fetchToken();
 
   const result = await Promise.all(res.map(async (track) => {
     var spotifyInfo = await spotify.getTrackInfo(track.artist, track.name, "track", 1);
     track.albumCover = await spotifyInfo.albumCover;
+    return await track;
+  }));
+  return result;
+}
+
+const getSpotifyLinks = async (params) => {
+  var res = await getRecentTracks(params);
+  const token = await spotify.fetchToken();
+
+  const result = await Promise.all(res.map(async (track) => {
+    var spotifyInfo = await spotify.getTrackInfo(track.artist, track.name, "track", 1);
     track.spotifyURI = await spotifyInfo.uri;
     return await track;
   }));
@@ -113,5 +125,7 @@ module.exports = {
   getRecentLyrics,
   getRecentPlaycounts,
   getFavouriteTracks,
-  getRecentTrackAndPoster,
+  getAlbumCovers,
+  getSpotifyLinks
+
 }
