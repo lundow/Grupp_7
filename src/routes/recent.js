@@ -11,6 +11,7 @@ const endpoints = {
   "/favourite_tracks": (p) => controller.getFavouriteTracks(p),
    "/album_covers": (p) => controller.getAlbumCovers(p),
    "/spotify_links": (p) => controller.getSpotifyLinks(p),
+   "/favourite_artists": (p) => controller.getFavouriteArtists(p)
 }
 
 const handleRequest = async (req, res, controllerFunction) => {
