@@ -4,6 +4,10 @@ const url = "http://ws.audioscrobbler.com/2.0/"
 const key = "&api_key=" + keys.lastFM
 const format = "&format=json"
 
+/*
+	Sends a request to the LastFM api asking for the recent tracks of a specific user.
+	Inparameters is username and limitations on how many tracks we want to retrieve.
+*/
 const getRecentTracks = async (username, limit) => {
   const limit_query = "&limit=" + limit
   const user_query = "&user=" + username
@@ -14,6 +18,11 @@ const getRecentTracks = async (username, limit) => {
   return await api.getData(req_url)
 }
 
+/*
+	Sends a request to the LastFM api asking for the information about a specific track. 
+	Inparameters is user, artist name and song name. Provides information such as
+	duration, playcount, url, toptags, album e.t.c.
+*/
 const getTrackInfo = async (params) => {
   const track_query = "&track=" + params.name
   const artist_query = "&artist=" + params.artist
@@ -27,6 +36,10 @@ const getTrackInfo = async (params) => {
   return info
 }
 
+/*
+	Sends a request to the LastFM api asking for the information about a specific user. 
+	Inparameters is the username, and provides information such as name, id, real name, country, age, gender, playcount e.t.c.
+*/
 const getUserInfo = async (params) => {
   const user_query = "&user=" + params.username
 
@@ -36,6 +49,10 @@ const getUserInfo = async (params) => {
   return await api.getData(req_url)
 }
 
+/*
+	Sends a request to the lastFM api asking for the favourite tracks. The inparameters is username and limitations,
+	depending on how many favourite tracks we want to retrieve.
+*/
 const getFavouriteTracks = async (username, limit) => {
   const limit_query = "&limit=" + limit
   const user_query = "&user=" + username
@@ -49,9 +66,30 @@ const getFavouriteTracks = async (username, limit) => {
   return favourite_tracks
 }
 
+/*
+	Sends a request to the LastFM api asking for the favourite artists of all times. Period is optional but not added.
+	Parameters is username and the limitations of how many artists we want to retrieve.
+*/
+const getFavouriteArtists = async (username, limit) => {
+	const user_query = "&user=" + username
+	const limit_query = "&limit=" + limit
+
+	const method = "?method=user.gettopartists" + user_query + limit_query
+	const req_url = url + method + key + format
+
+	const json = await api.getData(req_url)
+
+	const favourite_artists = json.topartists
+	return favourite_artists
+}
+
+/*
+	Exports modules so that you can include them in other modules using the require() method.
+*/
 module.exports = {
   getRecentTracks,
   getTrackInfo,
   getUserInfo,
-  getFavouriteTracks
+  getFavouriteTracks,
+  getFavouriteArtists
 }

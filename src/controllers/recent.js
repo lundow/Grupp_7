@@ -78,7 +78,6 @@ const getRecentPlaycounts = async (params) => {
   return tracks
 }
 
-
 const getAlbumCovers = async (params) => {
   var res = await getRecentTracks(params);
   const token = await spotify.fetchToken();
@@ -103,31 +102,11 @@ const getSpotifyLinks = async (params) => {
   return result;
 }
 
-const getFavouriteTracks = async (params) => {
-  const favourite_tracks = await lastFM.getFavouriteTracks(params.username, params.limit)
-
-  var tracks = []
-  for (var i in favourite_tracks["track"]) {
-    var track = favourite_tracks.track[i];
-    if (track.length === 0) track = undefined
-    tracks.push({
-      rank : track['@attr'].rank,
-      name : track.name,
-      artist : track.artist.name,
-      playcount: track.playcount
-    })
-
-  }
-  return tracks;
-}
-
 module.exports = {
   getRecentCombined,
   getRecentTracks,
   getRecentLyrics,
   getRecentPlaycounts,
-  getFavouriteTracks,
   getAlbumCovers,
-  getSpotifyLinks
-
+  getSpotifyLinks,
 }
