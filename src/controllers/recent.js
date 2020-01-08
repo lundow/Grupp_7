@@ -110,13 +110,15 @@ const getFavouriteTracks = async (params) => {
   for (var i in favourite_tracks["track"]) {
     var track = favourite_tracks.track[i];
     if (track.length === 0) track = undefined
-    tracks.push(track)
-
-    //console.log(favourite_tracks.track[i].name) - namn på låt
-    //console.log(favourite_tracks.track[i].artist.name) - namn på artist
+    tracks.push({
+      rank : track['@attr'].rank,
+      name : track.name,
+      artist : track.artist.name,
+      playcount: track.playcount
+    })
 
   }
-  return tracks
+  return tracks;
 }
 
 module.exports = {
