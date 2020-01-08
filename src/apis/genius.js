@@ -3,6 +3,9 @@ const keys = require("./../../keys.json")
 const url = "http://api.genius.com/"
 const key = "&access_token=" + keys.genius
 
+/*
+	Sends a request to the Genius API.
+*/
 const searchFor = async (searchTerm) => {
   const method = "search?q=" + searchTerm
   console.log(searchTerm)
@@ -11,6 +14,9 @@ const searchFor = async (searchTerm) => {
   return await api.getData(req_url)
 }
 
+/*
+	Exports modules so that you can include them in other modules using the require() method.
+*/
 module.exports = {
   searchFor
 }
