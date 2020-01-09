@@ -23,8 +23,6 @@ const fetchToken = async () => {
 }
 
 const getTrackInfo = async (artist, title, type, limit) => {
-console.log("GetTrackInfo:" + artist)
-console.log(title)
     const query = "q=" + encodeURIComponent(artist) + "+" + encodeURIComponent(title);
     const type_query = "&type=" + type;
     const limit_query = "&limit=" + limit;
