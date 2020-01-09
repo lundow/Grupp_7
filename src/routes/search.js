@@ -6,7 +6,6 @@ const controller = require("./../controllers/search.js")
 const endpoints = {
   "/lyrics": (p) => controller.getLyrics(p),
   "/playcount": (p) => controller.getPlaycount(p),
-  "/cover": (p) => controller.getCover(p),
   "/user": (p) => controller.getUserInfo(p),
   "/cover": (p) => controller.getAlbumCover(p),
   "/link": (p) => controller.getSpotifyLink(p),

@@ -8,8 +8,8 @@ const endpoints = {
   "/tracks" : (p) => controller.getRecentTracks(p),
   "/lyrics" : (p) => controller.getRecentLyrics(p),
   "/playcounts" : (p) => controller.getRecentPlaycounts(p),
-   "/album_covers": (p) => controller.getAlbumCovers(p),
-   "/spotify_links": (p) => controller.getSpotifyLinks(p),
+  "/album_covers": (p) => controller.getAlbumCovers(p),
+  "/spotify_links": (p) => controller.getSpotifyLinks(p),
 }
 
 const handleRequest = async (req, res, controllerFunction) => {
