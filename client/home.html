@@ -7,11 +7,20 @@
     <title> Home </title>
     <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="script.js"></script>
 </head>
 
 <body>
-    
+
     <div class="container">
+        <div class="input">
+            <p class="function">Ange LastFM användarnamn </p>
+            <input type="text" id="username-field"></input>
+            <div class="button noselect" onclick="search()">Sök</div>
+        </div>
+        <!--
         <p class="function"> Välj funktion nedan </p>
         <a href="show.html">
             <div class="button nr1">Visa senaste låt</div>
@@ -20,10 +29,12 @@
             <div class="button nr2">Visa topp 10 låtar</div>
         </a>
         <div class="button nr3">Sök låt & artist</div>
+        -->
+
     </div>
-    
-    
-    
+
+
+
 </body>
 
 </html>

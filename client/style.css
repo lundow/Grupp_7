@@ -27,6 +27,13 @@
     cursor: default;
 }
 
+.input {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    max-width: 500px;
+}
+
 form {
     display: flex;
     flex-direction: column;
@@ -42,6 +49,7 @@ input {
 }
 
 input[type="text"] {
+    font-size: large;
     box-shadow: 2px 1px 3px black;
     padding: 14px;
     border: 1px solid white;
@@ -60,15 +68,20 @@ input[type="submit"] {
 /* HOME PAGE */
 
 .button {
-    margin: 10px;
     box-shadow: 2px 1px 3px black;
     border-radius: 5px;
     padding: 16px;
+    margin-left: 20px;
     background-color: white;
     color: black;
     cursor: pointer;
-    width: 190px;
+    width: 100px;
     text-align: center;
+    transition: background-color 0.25s;
+}
+
+.button:hover {
+    background-color: #ffe6e6;
 }
 
 /* SHOW PAGE */
@@ -104,3 +117,13 @@ input[type="submit"] {
 .top {
     margin: 5px;
 }
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Old versions of Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Opera and Firefox */
+  }
