@@ -1,5 +1,6 @@
 const lastFM = require("./../apis/lastFM.js")
 const genius = require("./../apis/genius.js")
+const spotify = require("./../apis/spotify.js")
 const scraper = require("./../scraper.js")
 
 const getLyrics = async (params) => {
@@ -37,8 +38,26 @@ const getPlaycount = async (params) => {
   }
 }
 
-const getCover = async (params) => {
+const getAlbumCover = async (params) => {
+  const token = await spotify.fetchToken();
+  const spotifyInfo = await spotify.getTrackInfo(params.artist, params.name, "track", 1);
+  var result = {
+    "track":  params.name,
+    "artist": params.artist
+  };
+  result.albumCover = await spotifyInfo.albumCover;
+  return result;
+}
 
+const getSpotifyLink = async (params) => {
+  const token = await spotify.fetchToken();
+  const spotifyInfo = await spotify.getTrackInfo(params.artist, params.name, "track", 1);
+  var result = {
+    "track":  params.name,
+    "artist": params.artist
+  };
+  result.uri = await spotifyInfo.uri;
+  return result;
 }
 
 const getUserInfo = async (params) => {
@@ -59,6 +78,7 @@ const getUserInfo = async (params) => {
 module.exports = {
   getLyrics,
   getPlaycount,
-  getCover,
   getUserInfo,
+  getAlbumCover,
+  getSpotifyLink
 }

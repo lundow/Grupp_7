@@ -1,15 +1,11 @@
 const express = require("express")
 const router = express.Router()
-const controller = require("./../controllers/recent.js")
+const controller = require("./../controllers/top.js")
 
 //Available endpoints for /recent and the correspondning functions
 const endpoints = {
-  // "/": (p) => controller.getRecentCombined(p),
-  "/tracks" : (p) => controller.getRecentTracks(p),
-  "/lyrics" : (p) => controller.getRecentLyrics(p),
-  "/playcounts" : (p) => controller.getRecentPlaycounts(p),
-   "/album_covers": (p) => controller.getAlbumCovers(p),
-   "/spotify_links": (p) => controller.getSpotifyLinks(p),
+  "/tracks": (p) => controller.getFavouriteTracks(p),
+  "/artists": (p) => controller.getFavouriteArtists(p)
 }
 
 const handleRequest = async (req, res, controllerFunction) => {
@@ -17,9 +13,8 @@ const handleRequest = async (req, res, controllerFunction) => {
     var params = queryRequest(req, res)
     params['res'] = res
 
-    const json = await controllerFunction(params)
     if (res.statusCode < 400)
-      res.status(200).send(json)
+      res.status(200).send(await controllerFunction(params))
   } catch (error) {
     res.status(400).send(error.message)
   }

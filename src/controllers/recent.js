@@ -109,33 +109,28 @@ const getRecentPlaycounts = async (params) => {
   return tracks
 }
 
-const getRecentTrackAndPoster = async (params) => {
+const getAlbumCovers = async (params) => {
   var res = await getRecentTracks(params);
   const token = await spotify.fetchToken();
 
   const result = await Promise.all(res.map(async (track) => {
     var spotifyInfo = await spotify.getTrackInfo(track.artist, track.name, "track", 1);
     track.albumCover = await spotifyInfo.albumCover;
-    track.spotifyURI = await spotifyInfo.uri;
     return await track;
   }));
   return result;
 }
 
-const getFavouriteTracks = async (params) => {
-  const favourite_tracks = await lastFM.getFavouriteTracks(params.username, params.limit)
+const getSpotifyLinks = async (params) => {
+  var res = await getRecentTracks(params);
+  const token = await spotify.fetchToken();
 
-  var tracks = []
-  for (var i in favourite_tracks["track"]) {
-    var track = favourite_tracks.track[i];
-    if (track.length === 0) track = undefined
-    tracks.push(track)
-
-    //console.log(favourite_tracks.track[i].name) - namn på låt
-    //console.log(favourite_tracks.track[i].artist.name) - namn på artist
-
-  }
-  return tracks
+  const result = await Promise.all(res.map(async (track) => {
+    var spotifyInfo = await spotify.getTrackInfo(track.artist, track.name, "track", 1);
+    track.spotifyURI = await spotifyInfo.uri;
+    return await track;
+  }));
+  return result;
 }
 
 module.exports = {
@@ -143,6 +138,6 @@ module.exports = {
   getRecentTracks,
   getRecentLyrics,
   getRecentPlaycounts,
-  getFavouriteTracks,
-  getRecentTrackAndPoster,
+  getAlbumCovers,
+  getSpotifyLinks,
 }
