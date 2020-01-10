@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+﻿<!DOCTYPE HTML>
 
 <html>
 
@@ -18,7 +18,7 @@
         <div class="input">
             <p class="function">Ange LastFM användarnamn </p>
             <input type="text" id="username-field">
-            <div class="button noselect" onclick="search()">Sök</div>
+            <div class="button noselect" onclick="search()" defer>Sök</div>
         </div>
         <div id="error-message"></div>
        
@@ -49,6 +49,11 @@
         <div class="button nr3">Sök låt & artist</div>
         -->
 
+        <div class="lyrics">
+            <ol id="list" class="list">
+
+            </ol>
+        </div>
     </div>
 
 

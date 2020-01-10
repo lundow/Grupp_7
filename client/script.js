@@ -16,39 +16,63 @@ async function search() {
   //Fetching most recent track
   const username_query = "&username=" + $("#username-field").val()
 
-  response = await fetch(url + "recent/tracks?limit=1" + username_query)
+  response = await fetch(url + "recent/tracks?limit=5" + username_query)
   if (!checkResponsStatus(response)) return
   json = await response.json()
-  var recentTrack = json[0]
 
-  $(".lyrics .songname").text(recentTrack.name)
-  $(".lyrics .artistname").text("av " + recentTrack.artist)
+  var tracks = []
+  for(var i in json) {
+  	  tracks[i] = json[i]
+  }
 
-  //Fetching playcount
-  const track_query = "&track=" + recentTrack.name
-  const artist_query = "&artist=" + recentTrack.artist
 
-  response = await fetch(url + "search/playcount?" + username_query + track_query + artist_query)
-  if (!checkResponsStatus(response)) return
-  json = await response.json()
-  var playcount = json.playcount
+  //Varför containern appenda denna ovan, men inte här? Komponenterna i varje list-item försvinner, medan
+  //den som appendar ovan får med alla komponenter. 
+  for(var i in tracks) {
+  	  $(".container .list").append(lyricsComponent)
+  }
 
-  $(".lyrics .playcount").text(playcount + "st tidigare lyssningar")
+  //Ger varje list item i listan ett id
+  var index = 0;
+  for(var i in tracks) {
+  	  $("li").eq(index).attr("id", index)
+	  index++
+  }
 
-  // //Fetching Spotify link
-   response = await fetch(url + "search/link?" + track_query + artist_query)
-   if(!checkResponsStatus(response)) return
-   json = await response.json()
-   var spotify_uri = json.uri.substring(14)
+ var count = 0
+  for(var i in tracks) {
+  	 
+	 // $(".list-item").attr("id", count)
 
-  //Inserts data in Lyrics Header e.g. artistname, trackname
+	 //List-item med #count(id:t) får text
+	  $("#"+count + ", .songname").text(tracks[i].name)
+	  $("#"+count + ", .artistname").text("av " + tracks[i].artist)
 
-  
-  $(".lyrics .spotify").attr("src", spotify_src + spotify_uri)
-  
-  //Then fade in
-  $(".lyrics .header-wrapper").fadeIn(1500)
+	  const track_query = "&track=" + tracks[i].name
+	  const artist_query = "&artist=" + tracks[i].artist
 
+	   response = await fetch(url + "search/playcount?" + username_query + track_query + artist_query)
+	  if (!checkResponsStatus(response)) return
+	  json = await response.json()
+	  var playcount = json.playcount
+
+	  $("#"+count+", .playcount").text(playcount + "st tidigare lyssningar")
+
+	   // //Fetching Spotify link
+	  response = await fetch(url + "search/link?" + track_query + artist_query)
+	  if(!checkResponsStatus(response)) return
+	  json = await response.json()
+	  var spotify_uri = json.uri.substring(14)
+
+	  //Inserts data in Lyrics Header e.g. artistname, trackname
+	  console.log(spotify_src + spotify_uri)
+	  $("#"+count+", .spotify").attr("src", spotify_src + spotify_uri)
+	  //Then fade in
+	  $("#"+count+", .header-wrapper").fadeIn(1500)
+	  count++
+
+  }
+  /*
   response = await fetch(url + "search/lyrics?" + track_query + artist_query)
   if (!checkResponsStatus(response)) return
   json = await response.json()
@@ -56,6 +80,7 @@ async function search() {
 
   $(".lyrics .text").text(lyrics)
   $(".lyrics .text-wrapper").fadeIn(1500)
+    */
 
 }
 
@@ -70,7 +95,7 @@ function checkResponsStatus(response) {
 }
 
 const lyricsComponent =
-  "<div class=\"lyrics\">" +
+	"<li class=\"list-item lyrics\">" +
     "<div class=\"header-wrapper hidden\">" +
       "<div class=\"header\">" +
         "<iframe class=\"spotify\"></iframe>" +
@@ -84,4 +109,4 @@ const lyricsComponent =
     "<div class=\"text-wrapper hidden\">" +
       "<span class=\"text hidden\"></span>" +
     "</div>" + 
-  "</div>"
+	"</li>" 
