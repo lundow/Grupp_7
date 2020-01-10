@@ -32,7 +32,8 @@ const getTrackInfo = async (artist, title, type, limit) => {
 
     spotify_info={
         albumCover : res.tracks.items[0].album.images[0].url,
-        uri:res.tracks.items[0].uri
+        uri:res.tracks.items[0].uri,
+		url: res.tracks.items[0].external_urls.spotify
     }
     return spotify_info;
 };

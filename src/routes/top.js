@@ -7,7 +7,8 @@ const endpoints = {
   "/tracks": (p) => controller.getFavouriteTracks(p),
   "/artists": (p) => controller.getFavouriteArtists(p),
   "/albums": (p) => controller.getTopAlbums(p),
-  "/album_cover": (p) => controller.getTopAlbumCovers(p)
+  "/album_cover": (p) => controller.getTopAlbumCovers(p),
+  "/links": (p) => controller.getTopLinks(p)
 }
 
 const handleRequest = async (req, res, controllerFunction) => {
