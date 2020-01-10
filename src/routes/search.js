@@ -43,17 +43,17 @@ const queryRequest = (req, res) => {
     else params["username"] = username
 
   //track
-  //    - Required for /lyrics, /playcount & /cover
+  //    - Required for /lyrics, /playcount, /link & /cover
   const track = req.query.track
-  if (path === "/lyrics" || path === "/playcount" || path === "/cover")
+  if (path === "/lyrics" || path === "/playcount" || path === "/link" || path === "/cover")
     if (track === undefined || track.length < 1)
       res.status(400).send("400 - Track is undefined")
     else params["name"] = track
 
   //artist
-  //    - Required for /lyrics, /playcount & /cover
+  //    - Required for /lyrics, /playcount, /link & /cover
   const artist = req.query.artist
-  if (path === "/lyrics" || path === "/playcount" || path === "/cover")
+  if (path === "/lyrics" || path === "/playcount" || path === "/link" ||  path === "/cover")
     if (artist === undefined || artist.length < 1) 
       res.status(400).send("400 - Artist is undefined")
     else params["artist"] = artist
