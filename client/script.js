@@ -1,10 +1,26 @@
+
 //Our API
 const url = "http://localhost:8000/"
 
 //Embeding Spotify
 const spotify_src = "https://open.spotify.com/embed/track/"
 
+var toggled = false;
+var search_type = "recent";
+
+async function toggle(){
+  if(!toggled){
+    $("#search-type").text("Top");
+    search_type = "top";
+  }else{
+    $("#search-type").text("Recent");
+    search_type = "recent";
+  }
+  toggled=!toggled;
+}
+
 async function search() {
+  console.log("search");
   var response = {}, json = {}
 
   //Reset page if needed
@@ -15,12 +31,12 @@ async function search() {
 
   //Fetching most recent track
   const username_query = "&username=" + $("#username-field").val()
-
-  response = await fetch(url + "recent/tracks?limit=1" + username_query)
+  
+  response = await fetch(url + search_type + "/tracks?limit=1" + username_query)
   if (!checkResponsStatus(response)) return
   json = await response.json()
   var recentTrack = json[0]
-
+  console.log(json[0]);
   $(".lyrics .songname").text(recentTrack.name)
   $(".lyrics .artistname").text("av " + recentTrack.artist)
 
@@ -85,3 +101,5 @@ const lyricsComponent =
       "<span class=\"text hidden\"></span>" +
     "</div>" + 
   "</div>"
+
+  

@@ -17,8 +17,15 @@
     <div class="container">
         <div class="input">
             <p class="function">Ange LastFM användarnamn </p>
+           
+            
             <input type="text" id="username-field">
             <div class="button noselect" onclick="search()">Sök</div>
+                <label class="switch">
+                    <input onclick="toggle()" type="checkbox">
+                    <span class="slider round"></span>
+                    <p id = "search-type" class="switch-text">recent </p>
+                  </label>
         </div>
         <div id="error-message"></div>
        

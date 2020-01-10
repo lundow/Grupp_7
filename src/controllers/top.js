@@ -6,9 +6,14 @@ const getFavouriteTracks = async (params) => {
 
   var tracks = []
   for (var i in favourite_tracks["track"]) {
-    var track = favourite_tracks.track[i];
-    if (track.length === 0) track = undefined
-    tracks.push(track)
+	var track = favourite_tracks.track[i];
+	if (track.length === 0) track = undefined
+	
+	console.log("TRACK: ", track)
+    tracks.push({
+		"name": track.name,
+		"artist": track.artist.name
+		})
   }
   return tracks
 }
