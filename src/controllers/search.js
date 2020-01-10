@@ -52,6 +52,7 @@ const getAlbumCover = async (params) => {
 const getSpotifyLink = async (params) => {
   const token = await spotify.fetchToken();
   const spotifyInfo = await spotify.getTrackInfo(params.artist, params.name, "track", 1);
+  console.log(spotifyInfo)
   var result = {
     "track":  params.name,
     "artist": params.artist

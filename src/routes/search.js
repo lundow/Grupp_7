@@ -37,8 +37,6 @@ const queryRequest = (req, res) => {
   //username
   //    - Required for /playcount & /user
   const username = req.query.username
-  console.log(username)
-
   if (path === "/playcount" || path === "/user")
     if (username === undefined || username.length < 1)
       res.status(400).send("400 - Username is undefined")
