@@ -52,9 +52,30 @@ const getTopAlbumCovers = async(params) => {
 	return top_albums
 }
 
+const getTopLinks = async(params) => {
+	const top_songs = await getFavouriteTracks(params)
+	const token = await spotify.fetchToken()
+
+	var top_song_links = []
+	for(var i in top_songs) {
+		const song_name = top_songs[i].name
+		const song_artist = top_songs[i].artist.name
+		const track = await spotify.getTrackInfo(song_artist, song_name, "track", params.limit)
+
+		song_info = {
+			"song_name": song_name,
+			"song_artist": song_artist,
+			"song_url": track.url
+		}
+		top_song_links.push(song_info)
+	}
+	return top_song_links
+}
+
 module.exports = {
 	getFavouriteTracks,
 	getFavouriteArtists,
 	getTopAlbums,
-	getTopAlbumCovers
+	getTopAlbumCovers,
+	getTopLinks
 }
