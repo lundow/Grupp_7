@@ -34,11 +34,29 @@ const getTrackInfo = async (artist, title, type, limit) => {
         albumCover : res.tracks.items[0].album.images[0].url,
         uri:res.tracks.items[0].uri
     }
-
     return spotify_info;
 };
 
+const getAlbumInfo = async(artist, albumtitle, type, limit) => {
+	const query = "q=" + encodeURIComponent(artist) + "+" + encodeURIComponent(albumtitle)
+	const type_query = "&type=" + type
+	const limit_query = "&limit=" + limit
+	const url = "https://api.spotify.com/v1/search?" + query + type_query + limit_query
+	const headers = {'Authorization': "Bearer " + access_token}
+	const res = await api.getDataParams(url, headers)
+
+	spotify_info = {
+		"cover": res.albums.items[0].images[0].url,
+		"title": albumtitle,
+		"artist": artist
+	}
+
+	return spotify_info
+}
+
+
 module.exports = {
     fetchToken,
-    getTrackInfo
+    getTrackInfo,
+	getAlbumInfo
 };

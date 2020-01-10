@@ -83,6 +83,18 @@ const getFavouriteArtists = async (username, limit) => {
 	return favourite_artists
 }
 
+const getTopAlbums = async(username, limit) => {
+	const user_query = "&user=" + username
+	const limit_query = "&limit=" + limit
+
+	const method = "?method=user.gettopalbums" + user_query + limit_query
+	const req_url = url + method + key + format
+
+	const json = await api.getData(req_url)
+	const top_albums = json.topalbums.album
+	return top_albums
+}
+
 /*
 	Exports modules so that you can include them in other modules using the require() method.
 */
@@ -91,5 +103,6 @@ module.exports = {
   getTrackInfo,
   getUserInfo,
   getFavouriteTracks,
-  getFavouriteArtists
+  getFavouriteArtists,
+  getTopAlbums
 }
