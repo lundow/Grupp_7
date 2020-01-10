@@ -7,6 +7,9 @@ const spotify_src = "https://open.spotify.com/embed/track/"
 async function search() {
   var response = {}, json = {}
 
+  //Reset page if needed
+  if($(".lyrics").length) $(".lyrics").fadeOut(1500)
+
   //Inserts the Lyrics Component
   $(".container").append(lyricsComponent)
 
