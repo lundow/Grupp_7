@@ -36,15 +36,15 @@ async function search() {
   $(".lyrics .playcount").text(playcount + "st tidigare lyssningar")
 
   // //Fetching Spotify link
-  // response = await fetch(url + "search/link?" + track_query + artist_query)
-  // if(!checkResponsStatus(response)) return
-  // json = await response.json()
-  // var spotify_uri = json.uri.substring(14)
+   response = await fetch(url + "search/link?" + track_query + artist_query)
+   if(!checkResponsStatus(response)) return
+   json = await response.json()
+   var spotify_uri = json.uri.substring(14)
 
   //Inserts data in Lyrics Header e.g. artistname, trackname
 
   
-  //$(".lyrics .spotify").attr("src", spotify_src + spotify_uri)
+  $(".lyrics .spotify").attr("src", spotify_src + spotify_uri)
   
   //Then fade in
   $(".lyrics .header-wrapper").fadeIn(1500)
