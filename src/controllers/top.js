@@ -9,7 +9,6 @@ const getFavouriteTracks = async (params) => {
 	var track = favourite_tracks.track[i];
 	if (track.length === 0) track = undefined
 	
-	console.log("TRACK: ", track)
     tracks.push({
 		"name": track.name,
 		"artist": track.artist.name

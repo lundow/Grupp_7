@@ -32,11 +32,11 @@ async function search() {
   //Fetching most recent track
   const username_query = "&username=" + $("#username-field").val()
   
-  response = await fetch(url + search_type + "/tracks?limit=1" + username_query)
+  response = await fetch(url + search_type + "/tracks?limit=5" + username_query)
   if (!checkResponsStatus(response)) return
   json = await response.json()
   var recentTrack = json[0]
-  console.log(json[0]);
+
   $(".lyrics .songname").text(recentTrack.name)
   $(".lyrics .artistname").text("av " + recentTrack.artist)
 
@@ -101,5 +101,7 @@ const lyricsComponent =
       "<span class=\"text hidden\"></span>" +
     "</div>" + 
   "</div>"
+
+
 
   
