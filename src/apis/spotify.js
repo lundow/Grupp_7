@@ -30,14 +30,22 @@ const getTrackInfo = async (artist, title, type, limit) => {
     const url = "https://api.spotify.com/v1/search?" + query + type_query + limit_query;
     const headers = {'Authorization': "Bearer " + access_token}
     const res = await api.getDataParams(url,headers);
-    console.log(res);
-    spotify_info={
+    if(res.tracks.items.length===0){
+        spotify_info={
+            albumCover : "",
+            uri:"",
+            url: ""
+        }
+    }
+    else{
+     spotify_info={
         albumCover : res.tracks.items[0].album.images[0].url,
         uri:res.tracks.items[0].uri,
 		url: res.tracks.items[0].external_urls.spotify
     }
+}
     return spotify_info;
-};
+}
 
 function encode (sURL){
     sURL = sURL.toString().replace(/%E9/,'é');
