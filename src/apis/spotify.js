@@ -23,13 +23,14 @@ const fetchToken = async () => {
 }
 
 const getTrackInfo = async (artist, title, type, limit) => {
-    const query = "q=" + encodeURIComponent(artist) + "+" + encodeURIComponent(title);
+    const query = "q=" + encode(artist) + "+" + encode(title);
+    console.log(query);
     const type_query = "&type=" + type;
     const limit_query = "&limit=" + limit;
     const url = "https://api.spotify.com/v1/search?" + query + type_query + limit_query;
     const headers = {'Authorization': "Bearer " + access_token}
     const res = await api.getDataParams(url,headers);
-
+    console.log(res);
     spotify_info={
         albumCover : res.tracks.items[0].album.images[0].url,
         uri:res.tracks.items[0].uri,
@@ -38,8 +39,19 @@ const getTrackInfo = async (artist, title, type, limit) => {
     return spotify_info;
 };
 
+function encode (sURL){
+    sURL = sURL.toString().replace(/%E9/,'é');
+    if (decodeURIComponent(sURL) === sURL) {
+      console.log("Not encoded: ", sURL)
+      return encodeURIComponent(sURL)
+      
+    }
+    console.log("Already encoded: ", sURL)
+    return encodeURIComponent(decodeURIComponent(sURL));
+  }
+  
 const getAlbumInfo = async(artist, albumtitle, type, limit) => {
-	const query = "q=" + encodeURIComponent(artist) + "+" + encodeURIComponent(albumtitle)
+	const query = "q=" + encode(artist) + "+" + encode(albumtitle)
 	const type_query = "&type=" + type
 	const limit_query = "&limit=" + limit
 	const url = "https://api.spotify.com/v1/search?" + query + type_query + limit_query

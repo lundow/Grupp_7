@@ -25,13 +25,13 @@ const getLyrics = async (params) => {
 const getPlaycount = async (params) => {
   const userInfo = await lastFM.getUserInfo(params)
   const error = userInfo.error
+
   if (error === 6) {
     params.res.status(404).send("404 - User not found")
     return
   }
-  console.log(params)
-  const res = await lastFM.getTrackInfo(params)
 
+  const res = await lastFM.getTrackInfo(params)
   return {
     "track": res.name,
     "artist": res.artist.name,

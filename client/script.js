@@ -27,7 +27,6 @@ function search() {
 async function fetchFromAPI() {
   //Fetching most recent tracks
   const username_query = "&username=" + $("#username-field").val()
-
   response = await fetch(url + search_type + "/tracks?limit=" + LIMIT + username_query)
   if (!checkResponsStatus(response)) return
   tracks = await response.json()

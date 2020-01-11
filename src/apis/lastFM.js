@@ -18,14 +18,32 @@ const getRecentTracks = async (username, limit) => {
   return await api.getData(req_url)
 }
 
+
+
+function encode (sURL){
+  sURL = sURL.toString().replace(/%E9/,'é');
+  if (decodeURIComponent(sURL) === sURL) {
+    console.log("Not encoded: ", sURL)
+    return encodeURIComponent(sURL)
+    
+  }
+  console.log("Already encoded: ", sURL)
+  return encodeURIComponent(decodeURIComponent(sURL));
+}
 /*
 	Sends a request to the LastFM api asking for the information about a specific track. 
 	Inparameters is user, artist name and song name. Provides information such as
 	duration, playcount, url, toptags, album e.t.c.
 */
 const getTrackInfo = async (params) => {
-  const track_query = "&track=" + params.name
-  const artist_query = "&artist=" + params.artist
+  console.log("NAME:",params.name);
+  const name = encode(params.name);
+  console.log("NAME_AFTER:",name);
+  console.log("ARTIST:",params.artist);
+  const artist = encode(params.artist);
+  console.log("ARTIST_AFTER:",artist);
+  const track_query = "&track=" + name
+  const artist_query = "&artist=" + artist
   const user_query = "&user=" + params.username
 
   const method = "?method=track.getInfo" + user_query + track_query + artist_query
@@ -34,6 +52,7 @@ const getTrackInfo = async (params) => {
   console.log(req_url)
 
   const json = await api.getData(req_url)
+  console.log(json);
   const info = json.track
   return info
 }
