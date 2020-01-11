@@ -83,8 +83,29 @@ function toggle() {
   toggled = !toggled;
 }
 
+async function displayLyrics(item_id){
+  const id = $(item_id).attr("id");
+  console.log(id);
+  if($("#" + id + " .text").text().length>0){
+    $("#" + id + " .text-wrapper").fadeOut(1500)
+  }
+  else {
+    const track_query = "&track=" + escape(tracks[id].name)
+    const artist_query = "&artist=" + escape(tracks[id].artist)
+  
+    // Fetching Lyrics
+    response = await fetch(url + "search/lyrics?" + track_query + artist_query);
+    if (!checkResponsStatus(response)) return
+    var json = await response.json()
+    console.log(json);
+  
+    $("#" + id + " .text").text(json.lyrics);
+    $("#" + id + " .text-wrapper").fadeIn(1500)
+  }
+}
+
 function lyricsComponent(id) {
-  return "<div class=\"lyrics\" id=\"" + id + "\">" +
+  return "<div class=\"lyrics\" onclick='displayLyrics(this)' id=\"" + id + "\">" +
     "<div class=\"header-wrapper hidden\">" +
     "<div class=\"header\">" +
     "<iframe class=\"spotify\"></iframe>" +
