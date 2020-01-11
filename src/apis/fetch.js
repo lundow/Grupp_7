@@ -3,9 +3,9 @@ const fetch = require("node-fetch")
 /*
 	Sends a GET request to the given URL.
 */
-const getData = async (url) => {
+const getData = async (uri) => {
   try {
-    const res = await fetch(url)
+    const res = await fetch(uri)
     const json = await res.json()
     return json
   } catch (error) {
@@ -13,12 +13,9 @@ const getData = async (url) => {
   }
 }
 
-/*
-	
-*/
-const getDataParams = async (url, headers) => {
+const getDataParams = async (uri, headers) => {
   try {
-    const res = await fetch(url, { method: 'GET', headers: headers });
+    const res = await fetch(uri, { method: 'GET', headers: headers });
     const json = await res.json()
     return json
   } catch (error) {
@@ -29,9 +26,9 @@ const getDataParams = async (url, headers) => {
 /*
 	Sends a POST request to the given URL, inparameters is url, headers and data. 
 */
-const postData = async (url, headers, data) => {
+const postData = async (uri, headers, data) => {
   try {
-    const res = await fetch(url, { method: 'POST', headers: headers, body: data })
+    const res = await fetch(uri, { method: 'POST', headers: headers, body: data })
     const json = await res.json()
     return json
   } catch (error) {

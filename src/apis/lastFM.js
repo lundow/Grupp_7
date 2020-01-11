@@ -24,12 +24,14 @@ const getRecentTracks = async (username, limit) => {
 	duration, playcount, url, toptags, album e.t.c.
 */
 const getTrackInfo = async (params) => {
-  const track_query = "&track=" + params.name
-  const artist_query = "&artist=" + params.artist
+  const track_query = "&track=" + escape(params.name)
+  const artist_query = "&artist=" + escape(params.artist)
   const user_query = "&user=" + params.username
 
   const method = "?method=track.getInfo" + user_query + track_query + artist_query
   const req_url = url + method + key + format
+
+  console.log(req_url)
 
   const json = await api.getData(req_url)
   const info = json.track
@@ -53,24 +55,21 @@ const getUserInfo = async (params) => {
 	Sends a request to the lastFM api asking for the favourite tracks. The inparameters is username and limitations,
 	depending on how many favourite tracks we want to retrieve.
 */
-const getFavouriteTracks = async (username, limit) => {
+const getTopTracks = async (username, limit) => {
   const limit_query = "&limit=" + limit
   const user_query = "&user=" + username
 
   const method = "?method=user.gettoptracks" + limit_query + user_query
   const req_url = url + method + key + format
 
-  const json = await api.getData(req_url)
-
-  const favourite_tracks = json.toptracks
-  return favourite_tracks
+  return await api.getData(req_url)
 }
 
 /*
 	Sends a request to the LastFM api asking for the favourite artists of all times. Period is optional but not added.
 	Parameters is username and the limitations of how many artists we want to retrieve.
 */
-const getFavouriteArtists = async (username, limit) => {
+const getTopArtists = async (username, limit) => {
 	const user_query = "&user=" + username
 	const limit_query = "&limit=" + limit
 
@@ -102,7 +101,7 @@ module.exports = {
   getRecentTracks,
   getTrackInfo,
   getUserInfo,
-  getFavouriteTracks,
-  getFavouriteArtists,
+  getTopTracks,
+  getTopArtists,
   getTopAlbums
 }

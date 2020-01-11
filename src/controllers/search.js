@@ -31,6 +31,7 @@ const getPlaycount = async (params) => {
   }
 
   const res = await lastFM.getTrackInfo(params)
+  console.log(res)
   return {
     "track": res.name,
     "artist": res.artist.name,
