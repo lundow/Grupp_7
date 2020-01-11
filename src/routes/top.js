@@ -8,7 +8,7 @@ const endpoints = {
   "/lyrics": (p) => controller.getTopLyrics(p),
   "/playcounts" : (p) => controller.getTopPlaycounts(p),
   "/album_covers": (p) => controller.getTopAlbumCovers(p),
-  "/spotify_links": (p) => controller.getTopSpotifyLinks(p),
+  "/links": (p) => controller.getTopSpotifyLinks(p),
 
   "/artists": (p) => controller.getFavouriteArtists(p),
   "/albums": (p) => controller.getTopAlbums(p)

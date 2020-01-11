@@ -7,7 +7,7 @@ const key = "&access_token=" + keys.genius
 	Sends a request to the Genius API.
 */
 const searchFor = async (searchTerm) => {
-  const method = "search?q=" + escape(searchTerm)
+  const method = "search?q=" + searchTerm
   const req_url = url + method + key
 
   return await api.getData(req_url)
