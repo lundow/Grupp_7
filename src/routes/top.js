@@ -4,11 +4,14 @@ const controller = require("./../controllers/top.js")
 
 //Available endpoints for /recent and the correspondning functions
 const endpoints = {
-  "/tracks": (p) => controller.getFavouriteTracks(p),
+  "/tracks": (p) => controller.getTopTracks(p),
+  "/lyrics": (p) => controller.getTopLyrics(p),
+  "/playcounts" : (p) => controller.getTopPlaycounts(p),
+  "/album_covers": (p) => controller.getTopAlbumCovers(p),
+  "/links": (p) => controller.getTopSpotifyLinks(p),
+
   "/artists": (p) => controller.getFavouriteArtists(p),
-  "/albums": (p) => controller.getTopAlbums(p),
-  "/album_cover": (p) => controller.getTopAlbumCovers(p),
-  "/links": (p) => controller.getTopLinks(p)
+  "/albums": (p) => controller.getTopAlbums(p)
 }
 
 const handleRequest = async (req, res, controllerFunction) => {
