@@ -20,7 +20,6 @@ const fetchToken = async () => {
     }
     const res = await api.postData(url, headers, data);
     access_token = await res.access_token
-    console.log("ACCESS_TOKEN: ",access_token);
     data.delete;
     return (access_token);
 }
@@ -32,20 +31,27 @@ const fetchToken = async () => {
 */
 const getTrackInfo = async (artist, title, type, limit) => {
     const query = "q=" + encode(artist) + "+" + encode(title);
-    console.log(query);
     const type_query = "&type=" + type;
     const limit_query = "&limit=" + limit;
     const url = "https://api.spotify.com/v1/search?" + query + type_query + limit_query;
     const headers = {'Authorization': "Bearer " + access_token}
     const res = await api.getDataParams(url,headers);
-    console.log(res);
-    spotify_info={
+    if(res.tracks.items.length===0){
+        spotify_info={
+            albumCover : "",
+            uri:"",
+            url: ""
+        }
+    }
+    else{
+     spotify_info={
         albumCover : res.tracks.items[0].album.images[0].url,
         uri:res.tracks.items[0].uri,
 		url: res.tracks.items[0].external_urls.spotify
     }
+}
     return spotify_info;
-};
+}
 
 /*
 	Encodes a URL string, replacing a specific sign.
@@ -54,11 +60,8 @@ const getTrackInfo = async (artist, title, type, limit) => {
 function encode (sURL){
     sURL = sURL.toString().replace(/%E9/,'é');
     if (decodeURIComponent(sURL) === sURL) {
-      console.log("Not encoded: ", sURL)
       return encodeURIComponent(sURL)
-      
     }
-    console.log("Already encoded: ", sURL)
     return encodeURIComponent(decodeURIComponent(sURL));
   }
   

@@ -11,6 +11,10 @@ var tracks = []
 var toggled = false;
 var search_type = "recent";
 
+document.addEventListener('keyup', (e) => {
+  if (e.code === "Enter") search()
+})
+
 function search() {
   //Reset page if needed
   if ($(".list").length) {
@@ -36,11 +40,11 @@ async function fetchFromAPI() {
     $(".list").append(lyricsComponent(i))
     $("#" + i + " .songname").text(tracks[i].name)
     $("#" + i + " .artistname").text("av " + tracks[i].artist)
-    
+
     //Fetching playcounts
     const track_query = "&track=" + escape(tracks[i].name)
     const artist_query = "&artist=" + escape(tracks[i].artist)
-    
+
     response = await fetch(url + "search/playcount?" + username_query + track_query + artist_query)
     if (!checkResponsStatus(response)) return
     json = await response.json()
@@ -49,20 +53,23 @@ async function fetchFromAPI() {
 
     // Fetching Spotify links
     response = await fetch(url + "search/link?" + track_query + artist_query)
-    console.log(response)
     if (!checkResponsStatus(response)) return
     var json = await response.json()
     var spotify_uri = json.uri.substring(14)
-    
-    $("#" + i + " .spotify").attr("src", spotify_src + spotify_uri)
-     
+
+    if (spotify_uri.length > 0) {
+      $("#" + i + " .spotify").attr("src", spotify_src + spotify_uri)
+    } else {
+      $("#" + i + " .spotify").remove()
+      $("#" + i + " .header").prepend("<div class=\"spotify-error\">404</div>")
+    }
+
     $("#" + i).fadeIn(1500)
     $("#" + i + " .header-wrapper").fadeIn(1500)
   }
-
 }
 
-function checkResponsStatus(response) {
+async function checkResponsStatus(response) {
   if (response.status === 200) {
     $("#error-message").html("")
     return true
@@ -83,22 +90,25 @@ function toggle() {
   toggled = !toggled;
 }
 
-async function displayLyrics(item_id){
+async function displayLyrics(item_id) {
   const id = $(item_id).attr("id");
-  console.log(id);
-  if($("#" + id + " .text").text().length>0){
+
+  if ($("#" + id + " .text").text().length > 0) {
     $("#" + id + " .text-wrapper").fadeOut(1500)
+    window.setTimeout(() => {
+      $("#" + id + " .text-wrapper").empty()
+        .prepend("<div id=\"" + id + "\" class=\"text\"></div>")
+    }, 1500)
   }
   else {
     const track_query = "&track=" + escape(tracks[id].name)
     const artist_query = "&artist=" + escape(tracks[id].artist)
-  
+
     // Fetching Lyrics
     response = await fetch(url + "search/lyrics?" + track_query + artist_query);
     if (!checkResponsStatus(response)) return
     var json = await response.json()
-    console.log(json);
-  
+
     $("#" + id + " .text").text(json.lyrics);
     $("#" + id + " .text-wrapper").fadeIn(1500)
   }

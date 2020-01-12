@@ -4,22 +4,47 @@
 
 <head>
     <meta charset="UTF-8">
-    <title> Spotify Lyrics </title>
+    <title> Home </title>
     <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="script.js"></script>
 </head>
 
 <body>
-    
-    <div class="container">
-        <h2> Spotify & Genius API </h2> <!-- Last FM, Musixmatch -->
-        <form action="/" method="GET">
-            <input type="text" name="username" placeholder="Användarnamn" required>
-            <!-- Flera inputs -->
-            <input type="submit" value="LOGGA IN" name="loginKonsument">
-        </form>
-    </div>
-    
-</body>
 
+    <div class="container">
+        <div class="input">
+            <p class="function">Ange LastFM användarnamn </p>
+            <input type="text" id="username-field">
+            <label class="switch">
+                <input onclick="toggle()" type="checkbox">
+                <span class="slider round"></span>
+                <p id="search-type" class="switch-text">Senaste</p>
+            </label>
+            <div class="button noselect" onclick="search()">Sök</div>
+        </div>
+        <div id="error-message"></div>
+        <div class="list"></div>
+
+    <!-- Lyrics component
+        <div class="lyrics">
+            <div class="header-wrapper hidden">
+                <div class="header">
+                    <iframe class="spotify"></iframe>
+                    <div class="right">
+                        <span class="songname"></span>
+                        <span class="artistname"></span>
+                        <span class="playcount"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="text-wrapper hidden">
+                <span class="text"></span>
+            </div>
+        </div>
+    -->
+    </div>
+</body>
 </html>

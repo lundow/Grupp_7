@@ -7,7 +7,7 @@ const endpoints = {
   "/tracks": (p) => controller.getTopTracks(p),
   "/lyrics": (p) => controller.getTopLyrics(p),
   "/playcounts" : (p) => controller.getTopPlaycounts(p),
-  "/album_covers": (p) => controller.getTopAlbumCovers(p),
+  "/covers": (p) => controller.getTopAlbumCovers(p),
   "/links": (p) => controller.getTopSpotifyLinks(p),
 
   "/artists": (p) => controller.getFavouriteArtists(p),
@@ -48,7 +48,7 @@ const queryRequest = (req, res) => {
   const limit = req.query.limit
   if (limit <= 0)
     res.status(400).send("400 - Limit has to be bigger than 0")
-  else if (limit > 20)
+  else if (limit >= 20)
     res.status(400).send("400 - Limit has to be smaller than 20")
   else if (limit === undefined)
     params["limit"] = 5
