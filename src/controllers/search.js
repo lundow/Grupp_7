@@ -3,6 +3,10 @@ const genius = require("./../apis/genius.js")
 const spotify = require("./../apis/spotify.js")
 const scraper = require("./../scraper.js")
 
+/*
+	Sends a request to the Genius API with specific keywords,
+	searching lyrics for corresponding artist name and song name.
+*/
 const getLyrics = async (params) => {
   const res = await genius.searchFor(params.name + " " + params.artist)
   const hits = res.response.hits
@@ -22,6 +26,9 @@ const getLyrics = async (params) => {
   }
 }
 
+/*
+	Fetches the play count of a specific song from the lastFM api.
+*/
 const getPlaycount = async (params) => {
   const userInfo = await lastFM.getUserInfo(params)
   const error = userInfo.error
@@ -39,6 +46,9 @@ const getPlaycount = async (params) => {
   }
 }
 
+/*
+	Fetches the album cover of a specific song from a specific artist. 
+*/
 const getAlbumCover = async (params) => {
   const token = await spotify.fetchToken();
   const spotifyInfo = await spotify.getTrackInfo(params.artist, params.name, "track", 1);
@@ -50,6 +60,9 @@ const getAlbumCover = async (params) => {
   return result;
 }
 
+/*
+	Fethes the link to a specific song from Spotify API. 
+*/
 const getSpotifyLink = async (params) => {
   const token = await spotify.fetchToken();
   const spotifyInfo = await spotify.getTrackInfo(params.artist, params.name, "track", 1);
@@ -61,6 +74,9 @@ const getSpotifyLink = async (params) => {
   return result;
 }
 
+/*
+	Requests user information from Last FMapi.
+*/
 const getUserInfo = async (params) => {
   const userInfo = await lastFM.getUserInfo(params)
   const error = userInfo.error
@@ -76,6 +92,9 @@ const getUserInfo = async (params) => {
   }
 }
 
+/*
+	Exports modules so that you can include them in other modules using the require() method.
+*/
 module.exports = {
   getLyrics,
   getPlaycount,

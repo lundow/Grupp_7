@@ -8,6 +8,9 @@ const data = new URLSearchParams();
 var access_token;
 
 
+/*
+	Fetches an authentication token from spotify to be used when making API calls.
+*/
 const fetchToken = async () => {
     data.append("grant_type", "client_credentials");
     var url = 'https://accounts.spotify.com/api/token';
@@ -22,6 +25,11 @@ const fetchToken = async () => {
     return (access_token);
 }
 
+/*
+	Requests information about a specific track from Spotify API.
+	The inparameters is artist name and song title. 
+	Returns an JSON object with song URL, URI and album cover image.
+*/
 const getTrackInfo = async (artist, title, type, limit) => {
     const query = "q=" + encode(artist) + "+" + encode(title);
     console.log(query);
@@ -39,6 +47,10 @@ const getTrackInfo = async (artist, title, type, limit) => {
     return spotify_info;
 };
 
+/*
+	Encodes a URL string, replacing a specific sign.
+	This was due to problems with song names that was not encoded properly.
+*/
 function encode (sURL){
     sURL = sURL.toString().replace(/%E9/,'é');
     if (decodeURIComponent(sURL) === sURL) {
@@ -50,6 +62,11 @@ function encode (sURL){
     return encodeURIComponent(decodeURIComponent(sURL));
   }
   
+  /*
+	Requests information about a specific album from Spotify API.
+	The inparameters is artist name and album title. 
+	Returns an JSON object with album cover image URL, album title and artist name.
+  */
 const getAlbumInfo = async(artist, albumtitle, type, limit) => {
 	const query = "q=" + encode(artist) + "+" + encode(albumtitle)
 	const type_query = "&type=" + type
@@ -67,7 +84,9 @@ const getAlbumInfo = async(artist, albumtitle, type, limit) => {
 	return spotify_info
 }
 
-
+/*
+	Exports modules so that you can include them in other modules using the require() method.
+*/
 module.exports = {
     fetchToken,
     getTrackInfo,

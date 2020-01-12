@@ -18,7 +18,10 @@ const getRecentTracks = async (username, limit) => {
   return await api.getData(req_url)
 }
 
-
+/*
+	Encodes a URL string, replacing a specific sign.
+	This was due to problems with song names that was not encoded properly.
+*/
 
 function encode (sURL){
   sURL = sURL.toString().replace(/%E9/,'é');
@@ -101,6 +104,10 @@ const getTopArtists = async (username, limit) => {
 	return favourite_artists
 }
 
+/*
+	Sends a request to LastFM api asking for the favourite albums of all times.
+	Period is optional but not added. Parameters is username and the limitations of how many artists we want to retrieve.
+*/
 const getTopAlbums = async(username, limit) => {
 	const user_query = "&user=" + username
 	const limit_query = "&limit=" + limit
