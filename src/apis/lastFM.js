@@ -23,11 +23,8 @@ const getRecentTracks = async (username, limit) => {
 function encode (sURL){
   sURL = sURL.toString().replace(/%E9/,'é');
   if (decodeURIComponent(sURL) === sURL) {
-    console.log("Not encoded: ", sURL)
     return encodeURIComponent(sURL)
-    
   }
-  console.log("Already encoded: ", sURL)
   return encodeURIComponent(decodeURIComponent(sURL));
 }
 /*
