@@ -49,7 +49,6 @@ function encode (sURL){
     sURL = sURL.toString().replace(/%E9/,'é');
     if (decodeURIComponent(sURL) === sURL) {
       return encodeURIComponent(sURL)
-      
     }
     return encodeURIComponent(decodeURIComponent(sURL));
   }
