@@ -17,14 +17,12 @@ const fetchToken = async () => {
     }
     const res = await api.postData(url, headers, data);
     access_token = await res.access_token
-    console.log("ACCESS_TOKEN: ",access_token);
     data.delete;
     return (access_token);
 }
 
 const getTrackInfo = async (artist, title, type, limit) => {
     const query = "q=" + encode(artist) + "+" + encode(title);
-    console.log(query);
     const type_query = "&type=" + type;
     const limit_query = "&limit=" + limit;
     const url = "https://api.spotify.com/v1/search?" + query + type_query + limit_query;
@@ -50,11 +48,9 @@ const getTrackInfo = async (artist, title, type, limit) => {
 function encode (sURL){
     sURL = sURL.toString().replace(/%E9/,'é');
     if (decodeURIComponent(sURL) === sURL) {
-      console.log("Not encoded: ", sURL)
       return encodeURIComponent(sURL)
       
     }
-    console.log("Already encoded: ", sURL)
     return encodeURIComponent(decodeURIComponent(sURL));
   }
   
