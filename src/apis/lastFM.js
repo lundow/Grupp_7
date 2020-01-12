@@ -36,12 +36,8 @@ function encode (sURL){
 	duration, playcount, url, toptags, album e.t.c.
 */
 const getTrackInfo = async (params) => {
-  console.log("NAME:",params.name);
   const name = encode(params.name);
-  console.log("NAME_AFTER:",name);
-  console.log("ARTIST:",params.artist);
   const artist = encode(params.artist);
-  console.log("ARTIST_AFTER:",artist);
   const track_query = "&track=" + name
   const artist_query = "&artist=" + artist
   const user_query = "&user=" + params.username
@@ -49,10 +45,7 @@ const getTrackInfo = async (params) => {
   const method = "?method=track.getInfo" + user_query + track_query + artist_query
   const req_url = url + method + key + format
 
-  console.log(req_url)
-
   const json = await api.getData(req_url)
-  console.log(json);
   const info = json.track
   return info
 }
