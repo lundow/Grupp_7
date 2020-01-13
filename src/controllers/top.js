@@ -75,13 +75,13 @@ const getTopPlaycounts = async (params) => {
 }
 
 const getFavouriteArtists = async (params) => {
-	const favourite_artists = await lastFM.getFavouriteArtists(params.username, params.limit)
+	const favourite_artists = await lastFM.getTopArtists(params.username, params.limit)
 	//console.log(favourite_artists)
 
 	var artists = []
 	for (var i in favourite_artists.artist) {
 		var artist = favourite_artists.artist[i].name
-		artists.push(artist)
+		artists.push({"artist":artist})
 		if (artists.length === 0) artists = undefined
 	}
 	return artists
