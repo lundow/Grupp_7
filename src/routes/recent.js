@@ -46,7 +46,7 @@ const queryRequest = (req, res) => {
   const limit = req.query.limit
   if (limit <= 0)
     res.status(400).send("400 - Limit has to be bigger than 0")
-  else if (limit > 20)
+  else if (limit >= 20)
     res.status(400).send("400 - Limit has to be smaller than 20")
   else if (limit === undefined)
     params["limit"] = 5
@@ -56,4 +56,7 @@ const queryRequest = (req, res) => {
   return params
 }
 
+/*
+	Exports modules so that you can include them in other modules using the require() method.
+*/
 module.exports = router

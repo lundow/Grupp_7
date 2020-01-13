@@ -3,6 +3,11 @@ const spotify = require("./../apis/spotify.js")
 const genius = require("./../apis/genius.js")
 const scraper = require("./../scraper.js")
 
+/*
+	Requests the most listened songs from Last FM api.
+	Inparameters is a username and limitations on how many songs the user wants to fetch.
+	Returns a JSON object with the song name and song artists.
+*/
 const getTopTracks = async (params) => {
 	const response = await lastFM.getTopTracks(params.username, params.limit)
 
@@ -24,6 +29,10 @@ const getTopTracks = async (params) => {
 	return tracks
 }
 
+/*
+	Fetches the lyrics for the most listened songs from Genius API.
+	Returns a JSON object with song name, song artists and song lyrics.
+*/
 const getTopLyrics = async (params) => {
 	const topTracks = await getTopTracks(params)
 	var tracks = []
@@ -51,6 +60,10 @@ const getTopLyrics = async (params) => {
 	return tracks
 }
 
+/*
+	Fetches information about how many times the most played songs have been played. E.g. the play count.
+	Returns a JSON object with trackinformation such as track name, artist name and play count.
+*/
 const getTopPlaycounts = async (params) => {
 	const topTracks = await getTopTracks(params)
 	var tracks = []
@@ -74,6 +87,10 @@ const getTopPlaycounts = async (params) => {
 	return tracks
 }
 
+/*
+	Requests the most listened to artists from LastFM api.
+	Return a JSON object with the artists.
+*/
 const getFavouriteArtists = async (params) => {
 	const favourite_artists = await lastFM.getTopArtists(params.username, params.limit)
 	//console.log(favourite_artists)
@@ -87,6 +104,11 @@ const getFavouriteArtists = async (params) => {
 	return artists
 }
 
+/*
+	Fetches the most listened to albums from the LastFM api.
+	Inparameters is the username and limitations on how many albums we want to retrieve.
+	Returns a JSON object with artist name and album name.
+*/
 const getTopAlbums = async (params) => {
 	const top_albums = await lastFM.getTopAlbums(params.username, params.limit)
 	var albums = []
@@ -101,6 +123,10 @@ const getTopAlbums = async (params) => {
 	return albums;
 }
 
+/*
+	Fetches album covers for the most listened to albums from the Spotify api.
+	Returns a JSON object with top album information.
+*/
 const getTopAlbumCovers = async (params) => {
 	const albums = await getTopAlbums(params)
 	const token = await spotify.fetchToken()
@@ -113,6 +139,10 @@ const getTopAlbumCovers = async (params) => {
 	return top_albums
 }
 
+/*
+	Fetches the spotify links of the most listened to songs from Spotify api.
+	Returns track information like track artist name, track name and spotify URI and URL.
+*/
 const getTopSpotifyLinks = async (params) => {
   var res = await getTopTracks(params);
   const token = await spotify.fetchToken();
@@ -125,6 +155,9 @@ const getTopSpotifyLinks = async (params) => {
   return result;
 }
 
+/*
+	Exports modules so that you can include them in other modules using the require() method.
+*/
 module.exports = {
 	getTopTracks,
 	getTopLyrics,

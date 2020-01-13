@@ -61,4 +61,7 @@ const queryRequest = (req, res) => {
 return params
 }
 
+/*
+	Exports modules so that you can include them in other modules using the require() method.
+*/
 module.exports = router

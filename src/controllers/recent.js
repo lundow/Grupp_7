@@ -3,6 +3,11 @@ const spotify = require("./../apis/spotify.js")
 const genius = require("./../apis/genius.js")
 const scraper = require("./../scraper.js")
 
+/*
+	Requests the last songs listened to on spotify from LastFM api.
+	Inparameter is username and limit. The limitations is for how many tracks that is returned by LastFM.
+	It returns a JSON object with track name and artist name.
+*/
 const getRecentTracks = async (params) => {
   const response = await lastFM.getRecentTracks(params.username, params.limit)
 
@@ -24,6 +29,10 @@ const getRecentTracks = async (params) => {
   return tracks
 }
 
+/*
+	Fetches the song lyrics for the recent tracks, by scraping the lyrics from Genius API.
+	It returns a JSON object with song name, artist name and lyrics to the corresponding songs.
+*/
 const getRecentLyrics = async (params) => {
   const recentTracks = await getRecentTracks(params)
   var tracks = []
@@ -51,6 +60,10 @@ const getRecentLyrics = async (params) => {
   return tracks
 }
 
+/*
+	Fetches information about how many times recent songs have been played. E.g. the play count.
+	Returns a JSON object with trackinformation such as track name, artist name and play count.
+*/
 const getRecentPlaycounts = async (params) => {
   const recentTracks = await getRecentTracks(params)
   var tracks = []
@@ -74,6 +87,9 @@ const getRecentPlaycounts = async (params) => {
   return tracks
 }
 
+/*
+	Fetches the covers of the recent songs listened to from Spotify API. 
+*/
 const getRecentAlbumCovers = async (params) => {
   var res = await getRecentTracks(params);
   const token = await spotify.fetchToken();
@@ -86,6 +102,9 @@ const getRecentAlbumCovers = async (params) => {
   return result;
 }
 
+/*
+	Fetches the song links to the songs listened to recently.
+*/
 const getRecentSpotifyLinks = async (params) => {
   var res = await getRecentTracks(params);
   const token = await spotify.fetchToken();
@@ -98,6 +117,9 @@ const getRecentSpotifyLinks = async (params) => {
   return result;
 }
 
+/*
+	Exports modules so that you can include them in other modules using the require() method.
+*/
 module.exports = {
   getRecentTracks,
   getRecentLyrics,
